@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.xwiki.platform</groupId>
+    <artifactId>xwiki-platform-distribution</artifactId>
+    <!-- The version of XWiki where the extension is planned to be installed -->
+    <version>16.10.3</version>
+  </parent>
+  <groupId>groupid</groupId>
+  <artifactId>package</artifactId>
+  <packaging>xip</packaging>
+  <properties>
+    <!-- It's expected for some enforcer rules to fail with a dependency that was not designed to be built with this version of XWiki -->
+    <xwiki.enforcer.skip>true</xwiki.enforcer.skip>
+  </properties>
+  <dependencies>
+    <!-- The extension to package along with its dependencies-->
+    <dependency>
+      <groupId>org.xwiki.contrib.oidc</groupId>
+      <artifactId>oidc-authenticator</artifactId>
+      <version>2.13.7-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.xwiki.commons</groupId>
+          <artifactId>xwiki-commons-tool-extension-plugin</artifactId>
+          <version>${commons.version}</version>
+          <configuration>
+            <coreExtensions>
+              <!-- We exclude what is already in the WAR  -->
+              <coreExtension>
+                <groupId>org.xwiki.platform</groupId>
+                <artifactId>xwiki-platform-distribution-war-dependencies</artifactId>
+                <version>${platform.version}</version>
+                <type>pom</type>
+              </coreExtension>
+            </coreExtensions>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
